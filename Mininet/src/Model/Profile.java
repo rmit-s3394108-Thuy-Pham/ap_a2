@@ -1,5 +1,5 @@
-package Model;
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 public abstract class Profile {
 	private String name;
