@@ -77,8 +77,10 @@ public abstract class Profile {
 		return friendList;
 	}
 
-	public void setFriendList(ArrayList<Profile> friendList) {
-		this.friendList = friendList;
+	public void addFriend(Profile pro_friend) {
+		this.friendList.add(pro_friend);
 	}
+	public abstract void addClassmate(Profile pro_classmate);
+
 
 }

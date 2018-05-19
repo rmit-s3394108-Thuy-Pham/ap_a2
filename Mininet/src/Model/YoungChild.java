@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-public class YoungChild extends Profile // if change to Model should be extends Profile
+public class YoungChild extends Profile
 {
   private Adult parent1;
   private Adult parent2;
@@ -39,5 +39,9 @@ public class YoungChild extends Profile // if change to Model should be extends 
   public Adult getParent2()
   {
     return parent2;
+  }
+  public void addClassmate(Profile pro)
+  {
+    
   }
 }
