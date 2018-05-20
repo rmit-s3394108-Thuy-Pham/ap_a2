@@ -1,4 +1,6 @@
-public class Dependent extends User
+package Model2;
+
+public class Dependent extends Profile
 /*@author Thuy Pham*/
 {
   private Adult parent1;

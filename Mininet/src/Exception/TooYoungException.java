@@ -1,7 +1,9 @@
-public class TooYoungException extends TooYoungException
+package Exception;
+
+public class TooYoungException extends Exception
 {
   public TooYoungException(String errMesg)
   {
-    super(errMsg);
+//    super(errMsg);
   }
 }

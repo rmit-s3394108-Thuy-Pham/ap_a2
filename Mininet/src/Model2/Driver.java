@@ -1,3 +1,5 @@
+package Model2;
+
 import java.util.*;
 import java.util.InputMismatchException;
 /*@author Thuy Pham*/
@@ -20,7 +22,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
 */
 {
 
-  ArrayList<User> userList = new ArrayList<>(); // list stored all the user's profiles
+  ArrayList<Profile> userList = new ArrayList<>(); // list stored all the user's profiles
 
 
   // constructor Driver()
@@ -82,7 +84,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
 
   public void createTestingData()
   {
-    User u[] = new User[10];
+    Profile u[] = new Profile[10];
     u[0] = new Adult("Alice", "alicePic.png", "working at KFC", 24);
     u[1] = new Adult("Bob", "bobPic.png", "student at RMIT", 26);
     u[2] = new Adult("Cathy", "cathyPic.png", "freelancer", 28);
@@ -144,7 +146,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
 
   public void listAllUsers()
   {
-    for(User u: userList) // for each User object in the "userlist"
+    for(Profile u: userList) // for each User object in the "userlist"
     {
       System.out.println("  UserName: " + u.getName());
       System.out.println("  Profile Picture: " + u.getImage());
@@ -187,7 +189,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
 
     }
     // create a sub menu for three methods : display, update, delete
-    public void subMenu(User u)
+    public void subMenu(Profile u)
     {
 
       int choice = 0;
@@ -242,7 +244,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
 
     }
     //method displayProfile()
-    public void displayProfile(User u)
+    public void displayProfile(Profile u)
     {
       System.out.println("UserName: " + u.getName());
       System.out.println("Profile Picture: " + u.getImage());
@@ -257,7 +259,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
           }
 
       System.out.println("Friends in the network including: ");
-      for (User u1: u.getListofFriends())
+      for (Profile u1: u.getListofFriends())
         {
           System.out.println(u1.getName());
         }
@@ -266,7 +268,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
 
 
     //method updateUserProfile()
-    public void updateUserProfile(User u)
+    public void updateUserProfile(Profile u)
     {
       Scanner sc = new Scanner(System.in);
       String name;
@@ -297,13 +299,13 @@ This class also includes a SubMenu function to display a SubMenu for each user i
     }
 
     //method deleteUserProfile
-    public void deleteUserProfile(User u)
+    public void deleteUserProfile(Profile u)
     {
       userList.remove(u);
     }
 
     //method connectwithFriend()
-    public void connectwithFriend(User u)
+    public void connectwithFriend(Profile u)
     {
       listAllUsers();
       boolean check = false;
@@ -376,10 +378,10 @@ This class also includes a SubMenu function to display a SubMenu for each user i
 
           //method checkConnection(): check if two User object exist in each other's friendlist or not
 
-    public boolean checkConnection(User u1, User u2)
+    public boolean checkConnection(Profile u1, Profile u2)
     {
        boolean checkUserExistInFriendlist = false;
-       for (User u : u1.getListofFriends())
+       for (Profile u : u1.getListofFriends())
        {
         if (u.equals(u2))
         {
@@ -397,7 +399,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
     public boolean doesUserExist(String name)
     {
       boolean exist = false;
-      for (User u : userList)
+      for (Profile u : userList)
       {
         if (name.equals(u.getName()))
           exist = true;
@@ -406,9 +408,9 @@ This class also includes a SubMenu function to display a SubMenu for each user i
     }
 
     //method returnObjectUser(String nameofUser)
-    public User returnObjectUsersbyInputName(String nameofUser)
+    public Profile returnObjectUsersbyInputName(String nameofUser)
     {
-      for (User u : userList)
+      for (Profile u : userList)
       {
         if (nameofUser.equals(u.getName()))
         {
@@ -520,7 +522,7 @@ This class also includes a SubMenu function to display a SubMenu for each user i
     public boolean checkIfAdult(String name)
     {
       boolean check = false;
-      for (User u : userList)
+      for (Profile u : userList)
       {
         if (returnObjectUsersbyInputName(name) instanceof Adult)
           check = true;
@@ -531,9 +533,4 @@ This class also includes a SubMenu function to display a SubMenu for each user i
       return check;
 
     }
-
-
-
-
-
   }

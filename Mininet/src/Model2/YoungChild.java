@@ -1,3 +1,5 @@
+package Model2;
+
 public class YoungChild extends Profile // if change to Model should be extends Profile
 {
   private Adult parent1;
@@ -39,8 +41,8 @@ public class YoungChild extends Profile // if change to Model should be extends 
   {
     this.parent2 = parent2;
   }
-  public void getParent2()
+  public Adult getParent2()
   {
-    return parent2;
+	  return this.parent2;
   }
 }

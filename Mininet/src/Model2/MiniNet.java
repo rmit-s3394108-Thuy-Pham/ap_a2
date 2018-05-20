@@ -1,3 +1,5 @@
+package Model2;
+
 public class MiniNet
 /*@author Thuy Pham*/
 {

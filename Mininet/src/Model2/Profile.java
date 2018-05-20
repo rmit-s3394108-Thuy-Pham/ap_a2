@@ -1,15 +1,17 @@
+package Model2;
+
 import java.util.*;
 /*@author Thuy Pham*/
 
-public abstract class User
+public abstract class Profile
 {
   //common variables between users
   private String name;
   private String image;
   private String status;
-  private ArrayList<User> listOfFriends = new ArrayList<>(); // list of friends for each user
+  private ArrayList<Profile> listOfFriends = new ArrayList<>(); // list of friends for each user
 
-  public User(String name, String image, String status)
+  public Profile(String name, String image, String status)
   {
     this.setName(name);
     this.setImage(image);
@@ -46,12 +48,12 @@ public abstract class User
     this.status = status;
   }
 
-  public ArrayList<User> getListofFriends()
+  public ArrayList<Profile> getListofFriends()
   {
     return listOfFriends;
   }
 
-  public void setListofFriends(ArrayList<User> listOfFriends)
+  public void setListofFriends(ArrayList<Profile> listOfFriends)
   {
     this.listOfFriends = listOfFriends;
   }
