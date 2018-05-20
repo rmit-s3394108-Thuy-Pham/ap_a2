@@ -1,10 +1,14 @@
+package Model;
+
 import java.io.*;
 import java.util.*;
+
+import javafx.scene.control.Alert;
 
 public class ReadFile
 {
   private ArrayList<Profile> listofPros;
-  public ReadFile()
+  public ReadFile() throws IOException
   {
     listofPros = new ArrayList<Profile>();
     String filePeople = "document/people.txt";
@@ -372,5 +376,35 @@ public class ReadFile
   {
     return this.listofPros;
   }
+  public static void main(String args[]) throws IOException {
+	  ReadFile reader = new ReadFile();
+	  for(Profile pro: reader.getListofPros()) {
+		  if(pro instanceof Adult) {
+			  System.out.println("name: " + ((Adult)pro).getName());
+			  System.out.println("Age: " + ((Adult)pro).getAge());
+			  System.out.println("Status: " + ((Adult)pro).getImage());
+			  System.out.println("Gender: " + ((Adult)pro).getStatus());
+			  System.out.println("Postcode: " + ((Adult)pro).getGender());
+		  }
+		  
+		  if(pro instanceof Children) {
+			  System.out.println("THis is a children");
+		  }
+		  
+		  if(pro instanceof YoungChild) {
+			  System.out.println("this is a young child");
+		  }
+	  }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 }

@@ -17,6 +17,6 @@ public interface MenuInterface {
 	public boolean checkRelationship(Profile pro1, Profile pro2);
 	public boolean checkExistanceProfile(String name);
 	public Profile objProReturn(String name);
-	public boolean checkPaternity(Adult adult, Childrend child);
+	public boolean checkPaternity(Adult adult, Children child);
 	public void dataProvide();
 }
