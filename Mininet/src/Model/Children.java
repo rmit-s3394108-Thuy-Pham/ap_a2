@@ -9,9 +9,12 @@ public class Children extends Profile {
 	private Adult parent2;
 	private ArrayList<Profile> classmateslist = new ArrayList<>();
 	private int age;
-
-	public Children(String name, String image, String status, String gender, String postcode, int age, Adult adult1, Adult adult2) {
+	public Children(String name, String image, String status, String gender, String postcode, int age) {
 		super(name, image, status, gender, postcode);
+		this.age = age;
+	}
+	public Children(String name, String image, String status, String gender, String postcode, int age, Adult adult1, Adult adult2) {
+		this(name, image, status, gender, postcode, age);
 		this.setAge(age);
 		this.setParent1(adult1);
 		this.setParent2(adult2);

@@ -8,12 +8,14 @@ import javafx.scene.control.Alert;
 public class ReadFile
 {
   private ArrayList<Profile> listofPros;
+  private ArrayList<Profile> listofRelations;
   public ReadFile() throws IOException
   {
     listofPros = new ArrayList<Profile>();
+    
     String filePeople = "document/people.txt";
     String fileRelation = "document/relations.txt";
-	  Hashtable<String, ArrayList<String>> adults = new Hashtable<>();
+	 Hashtable<String, ArrayList<String>> adults = new Hashtable<>();
     Hashtable<String, ArrayList<String>> children = new Hashtable<>();
     Hashtable<String, ArrayList<String>> youngchild = new Hashtable<>();
     Hashtable<Integer, ArrayList<String>> relations = new Hashtable<>();
@@ -79,13 +81,9 @@ public class ReadFile
         System.out.println(e); //need to modify when have GUI
       }
       fr.close();
-    }
-    catch(FileNotFoundException fnfe)
-    {
+    }catch(FileNotFoundException fnfe){
       System.out.println(fnfe.getMessage());// need to modify when have GUI
     }
-
-
 
     try
     {
@@ -396,6 +394,13 @@ public class ReadFile
 		  }
 	  }
   }
+//  public List<E>
+public ArrayList<Profile> getListofRelations() {
+	return listofRelations;
+}
+public void setListofRelations(ArrayList<Profile> listofRelations) {
+	this.listofRelations = listofRelations;
+}
   
   
   

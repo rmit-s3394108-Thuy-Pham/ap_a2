@@ -8,10 +8,13 @@ public class YoungChild extends Profile
   private Adult parent2;
   private int age;
 
-
+  public YoungChild(String name, String image, String status, String gender, String postcode, int age) {
+	  super(name, image, status, gender, postcode);
+	  this.age = age;
+  }
   public YoungChild(String name, String image, String status, String gender, String postcode, int age, Adult parent1, Adult parent2)
   {
-    super(name, image, status, gender, postcode);
+    this(name, image, status, gender, postcode, age);
     this.setAge(age);
     this.setParent1(parent1);
     this.setParent2(parent2);
