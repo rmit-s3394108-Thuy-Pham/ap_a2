@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-public class Menu implements MenuInterface{
+public class Menu {
 	Scanner s;
 	private Scanner sAdd;
 	private Scanner sCheck;
@@ -12,7 +12,7 @@ public class Menu implements MenuInterface{
 	ArrayList<Profile> profileList = new ArrayList<>();
 	
 	public Menu() {
-		dataProvide();
+//		dataProvide();
 		int i = 0;
 		do {
 			s = new Scanner(System.in);
@@ -58,8 +58,8 @@ public class Menu implements MenuInterface{
 			System.out.println((profileList.indexOf(pro) + 1 ) +"	name:"+ pro.getName());
 			System.out.println("	image:"+ pro.getImage());
 			System.out.println("	status:"+ pro.getStatus());
-			if(pro instanceof Childrend) {
-				System.out.println("	age:"+ ((Childrend)pro).getAge());
+			if(pro instanceof Children) {
+				System.out.println("	age:"+ ((Children)pro).getAge());
 				System.out.println("	this is a Children");
 			}
 			
@@ -124,8 +124,8 @@ public class Menu implements MenuInterface{
 	
 	public void displayProfileInfo(Profile pro) {
 
-		if(pro instanceof Childrend) {
-			((Childrend)pro).displayProfileInfo();
+		if(pro instanceof Children) {
+			((Children)pro).displayProfileInfo();
 		}
 		if(pro instanceof Adult) {
 			((Adult)pro).displayProfileInfo();
@@ -166,36 +166,36 @@ public class Menu implements MenuInterface{
 	
 	public void makeFriend(Profile pro1, Profile pro2) {
 		
-		if(pro1 instanceof Childrend && ((Childrend)pro1).getAge() <= 2) {
+		if(pro1 instanceof Children && ((Children)pro1).getAge() <= 2) {
 			System.out.println(pro1.getName()+ "'s age < 2 **** not enough to make friend");
 		}
-		if(pro2 instanceof Childrend && ((Childrend)pro2).getAge() <= 2) {
+		if(pro2 instanceof Children && ((Children)pro2).getAge() <= 2) {
 			System.out.println(pro2.getName()+ "'s age < 2 **** not enough to make friend");
 		}
 		
 		
 		
-		if(pro1 instanceof Childrend && pro2 instanceof Childrend) {
-			System.out.println("Gap:" + Math.abs(((Childrend)pro1).getAge() - ((Childrend)pro2).getAge()));
-			if((Math.abs(((Childrend)pro1).getAge() - ((Childrend)pro2).getAge()) ) > 3) {
+		if(pro1 instanceof Children && pro2 instanceof Children) {
+			System.out.println("Gap:" + Math.abs(((Children)pro1).getAge() - ((Children)pro2).getAge()));
+			if((Math.abs(((Children)pro1).getAge() - ((Children)pro2).getAge()) ) > 3) {
 				System.out.println("The gap between ages greater than 3**** fail to make friend");
 			}
 			else 
-				if(checkRelationship(pro1, pro2) == false && ((Childrend)pro1).getAge() > 2 && ((Childrend)pro2).getAge() > 2 && (Math.abs(((Childrend)pro1).getAge() - ((Childrend)pro2).getAge()) ) < 3 )  {
+				if(checkRelationship(pro1, pro2) == false && ((Children)pro1).getAge() > 2 && ((Children)pro2).getAge() > 2 && (Math.abs(((Children)pro1).getAge() - ((Children)pro2).getAge()) ) < 3 )  {
 				pro1.getFriendList().add(pro2);
 				pro2.getFriendList().add(pro1);
 				}
 		}
-		if(pro1 instanceof Childrend && pro2 instanceof Adult) {
-			if(checkRelationship(pro1, pro2) == false && ((Childrend)pro1).getAge() > 2 && checkPaternity((Adult)pro2, (Childrend)pro1) == false && (Math.abs(((Childrend)pro1).getAge() - ((Adult)pro2).getAge()) ) < 3) {
+		if(pro1 instanceof Children && pro2 instanceof Adult) {
+			if(checkRelationship(pro1, pro2) == false && ((Children)pro1).getAge() > 2 && checkPaternity((Adult)pro2, (Children)pro1) == false && (Math.abs(((Children)pro1).getAge() - ((Adult)pro2).getAge()) ) < 3) {
 				pro1.getFriendList().add(pro2);
 				pro2.getFriendList().add(pro1);
 			}
 			else
 				System.out.println("Fail to make friend");
 		}
-		if(pro1 instanceof Adult && pro2 instanceof Childrend) {
-			if(checkRelationship(pro1, pro2) == false && ((Childrend)pro2).getAge() > 2 && checkPaternity((Adult)pro1, (Childrend)pro2) == false && (Math.abs(((Adult)pro1).getAge() - ((Childrend)pro2).getAge()) ) < 3) {
+		if(pro1 instanceof Adult && pro2 instanceof Children) {
+			if(checkRelationship(pro1, pro2) == false && ((Children)pro2).getAge() > 2 && checkPaternity((Adult)pro1, (Children)pro2) == false && (Math.abs(((Adult)pro1).getAge() - ((Children)pro2).getAge()) ) < 3) {
 				pro1.getFriendList().add(pro2);
 				pro2.getFriendList().add(pro1);
 			}
@@ -254,13 +254,13 @@ public class Menu implements MenuInterface{
 			System.out.println("Mom:");
 			momName = s.nextLine();
 			
-			if(checkExistanceProfile(dadName) == false || checkExistanceProfile(momName) == false || ((Adult)objProReturn(dadName)).getChild() != null || ((Adult)objProReturn(momName)).getChild() != null) {
+			if(checkExistanceProfile(dadName) == false || checkExistanceProfile(momName) == false || ((Adult)objProReturn(dadName)).getChildrenList() != null || ((Adult)objProReturn(momName)).getChildrenList() != null) {
 				System.out.println("***create false*****Dad or mom does'nt exist or has another child!****");
 			}
 			else {
-				profileList.add(new Childrend(name, image, status, age, (Adult)objProReturn(dadName), (Adult)objProReturn(momName)));
-				((Adult)objProReturn(dadName)).setChild((Childrend)profileList.get(profileList.size()-1));
-				((Adult)objProReturn(momName)).setChild((Childrend)profileList.get(profileList.size()-1));
+				profileList.add(new Children(name, image, status, age, (Adult)objProReturn(dadName), (Adult)objProReturn(momName)));
+				((Adult)objProReturn(dadName)).addChildren((Children)profileList.get(profileList.size()-1));;
+				((Adult)objProReturn(momName)).addChildren((Children)profileList.get(profileList.size()-1));
 				System.out.println("a new child is created!");
 			}
 		}
@@ -305,12 +305,12 @@ public class Menu implements MenuInterface{
 		}
 	}
 	public void showRelation(Profile pro) {
-		if(pro instanceof Childrend) {
-			((Childrend)pro).showRelation();
+		if(pro instanceof Children) {
+//			((Children)pro).showRelation();
 		}
 		
 		if(pro instanceof Adult) {
-			((Adult)pro).showRelation();
+//			((Adult)pro).showRelation();
 		}
 	}
 	
@@ -356,57 +356,61 @@ public class Menu implements MenuInterface{
 		return null;
 	}
 	
-	public boolean checkPaternity(Adult adult, Childrend child) {
-		if(adult.equals(child.getDad()) || adult.equals(child.getMom())) {
+	public boolean checkPaternity(Adult adult, Children child) {
+		if(adult.equals(child.getParent1()) || adult.equals(child.getParent2())) {
 			return true;
 		}
 		else 
 			return false;
 	}
 	
-	public void dataProvide() {
-	
-		Profile pro[] = new Profile[9];
-		pro[0] = new Childrend("Alex", "a.jpg", "i am Alex", 15);
-		pro[1] = new Adult("AlexDad", "a.jpg", "i am Alex dad", 40);
-		pro[2] = new Adult("AlexMom", "a.jpg", "i am Alex mom", 34);
-		pro[3] = new Childrend("Bill", "a.jpg", "i am Bill", 15);
-		pro[4] = new Adult("BillDad", "a.jpg", "i am Bill dad", 45);
-		pro[5] = new Adult("BillMom", "a.jpg", "i am Bill mom", 39);
-		pro[6] = new Adult("Steven", "a.jpg", "i am Steven", 30);
-		pro[7] = new Adult("Eliza", "a.jpg", "i am Eliza", 30);
-		pro[8] = new Adult("Alice", "a.jpg", "i am Alice", 30);
-
-		pro[0].getFriendList().add(pro[3]);
-		pro[3].getFriendList().add(pro[0]);
-		
-		pro[2].getFriendList().add(pro[6]);
-		pro[6].getFriendList().add(pro[2]);
-		
-		if(pro[0] instanceof Childrend && pro[1] instanceof Adult && pro[2] instanceof Adult){		
-			((Childrend)pro[0]).setDad((Adult)pro[1]);
-			((Childrend)pro[0]).setMom((Adult)pro[2]);
-			((Adult)pro[1]).setChild((Childrend)pro[0]);
-			((Adult)pro[2]).setChild((Childrend)pro[0]);
-		}
-		
-		if(pro[3] instanceof Childrend && pro[4] instanceof Adult && pro[5] instanceof Adult){		
-			((Childrend)pro[3]).setDad((Adult)pro[4]);
-			((Childrend)pro[3]).setMom((Adult)pro[5]);
-			((Adult)pro[4]).setChild((Childrend)pro[3]);
-			((Adult)pro[5]).setChild((Childrend)pro[3]);
-		}
-		profileList.add(pro[0]);
-		profileList.add(pro[1]);
-		profileList.add(pro[2]);
-		profileList.add(pro[3]);
-		profileList.add(pro[4]);
-		profileList.add(pro[5]);
-		profileList.add(pro[6]);
-		profileList.add(pro[7]);
-		profileList.add(pro[8]);
-		
-	}
+//	public void dataProvide() {
+//	
+//		Profile pro[] = new Profile[9];
+//		pro[0] = new Children("Alex", "a.jpg", "i am Alex", 15);
+//		pro[1] = new Adult("AlexDad", "a.jpg", "i am Alex dad", 40);
+//		pro[2] = new Adult("AlexMom", "a.jpg", "i am Alex mom", 34);
+//		pro[3] = new Children("Bill", "a.jpg", "i am Bill", 15);
+//		pro[4] = new Adult("BillDad", "a.jpg", "i am Bill dad", 45);
+//		pro[5] = new Adult("BillMom", "a.jpg", "i am Bill mom", 39);
+//		pro[6] = new Adult("Steven", "a.jpg", "i am Steven", 30);
+//		pro[7] = new Adult("Eliza", "a.jpg", "i am Eliza", 30);
+//		pro[8] = new Adult("Alice", "a.jpg", "i am Alice", 30);
+//
+//		pro[0].getFriendList().add(pro[3]);
+//		pro[3].getFriendList().add(pro[0]);
+//		
+//		pro[2].getFriendList().add(pro[6]);
+//		pro[6].getFriendList().add(pro[2]);
+//		
+//		if(pro[0] instanceof Children && pro[1] instanceof Adult && pro[2] instanceof Adult){		
+//			((Children)pro[0]).setParent1((Adult)pro[1]);
+//			((Children)pro[0]).setParent1((Adult)pro[2]);
+//			((Adult)pro[1]).addChildren((Children)pro[0]);
+//			((Adult)pro[2]).addChildren((Children)pro[0]);
+//		}
+//		
+//		if(pro[3] instanceof Children && pro[4] instanceof Adult && pro[5] instanceof Adult){		
+////			((Children)pro[3]).setDad((Adult)pro[4]);
+////			((Children)pro[3]).setMom((Adult)pro[5]);
+////			((Adult)pro[4]).setChild((Children)pro[3]);
+////			((Adult)pro[5]).setChild((Children)pro[3]);
+//			((Children)pro[3]).setParent1((Adult)pro[4]);
+//			((Children)pro[3]).setMom((Adult)pro[5]);
+//			((Adult)pro[4]).setChild((Children)pro[3]);
+//			((Adult)pro[5]).setChild((Children)pro[3]);
+//		}
+//		profileList.add(pro[0]);
+//		profileList.add(pro[1]);
+//		profileList.add(pro[2]);
+//		profileList.add(pro[3]);
+//		profileList.add(pro[4]);
+//		profileList.add(pro[5]);
+//		profileList.add(pro[6]);
+//		profileList.add(pro[7]);
+//		profileList.add(pro[8]);
+//		
+//	}
 		
 }
 

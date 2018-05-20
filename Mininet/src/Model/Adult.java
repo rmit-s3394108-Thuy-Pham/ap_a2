@@ -11,7 +11,10 @@ public class Adult extends Profile {
 	private ArrayList<Profile> classmateslist = new ArrayList<>();
 	private Profile couple = null;
 	private int age;
-
+	public Adult(String name, String image, String status, int age) {
+		super(name, image, status);
+		this.age = age;
+	}
 	public Adult(String name, String image, String status, String gender, String postcode, int age) {
 		super(name, image, status, gender, postcode);
 		this.setAge(age);

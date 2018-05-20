@@ -19,6 +19,13 @@ public class Children extends Profile {
 		this.setParent1(adult1);
 		this.setParent2(adult2);
 	}
+	public Children(String name, String image, String status, int age, Adult adult1, Adult adult2) {
+//		this(name, image, status, age, adult1, ad);
+		super(name, image, status);
+		this.setAge(age);
+		this.setParent1(adult1);
+		this.setParent2(adult2);
+	}
 	public Adult getParent1() {
 		return parent1;
 	}

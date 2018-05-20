@@ -10,7 +10,12 @@ public abstract class Profile {
 	private String gender;
 	private String postcode;
 	private ArrayList<Profile> friendList = new ArrayList<>();
-
+	
+	public Profile(String name, String image, String status) {
+		this.setName(name);
+		this.setImage(image);
+		this.setStatus(status);
+	}
 	public Profile(String name, String image, String status, String gender, String postcode) {
 		this.setName(name);
 		this.setImage(image);
