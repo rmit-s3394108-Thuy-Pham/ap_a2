@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import DBConnection.DBLoadData;
 import imageProcess.ImagePro;
 
 public class MainMenuGUI extends JFrame implements ActionListener {
@@ -35,7 +36,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 	int _frameY = 150;
 	int _pnMenuWidth = 150;
 	int _pnChangingWidth = 550;
-	
+	DBLoadData dbLoadConnection = new DBLoadData();
 	public MainMenuGUI() {
 		setFrame();
 	}

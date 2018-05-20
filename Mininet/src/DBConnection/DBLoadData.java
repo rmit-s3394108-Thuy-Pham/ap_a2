@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Model.Adult;
 import Model.Children;
@@ -18,7 +19,7 @@ import Model.YoungChild;
 
 public class DBLoadData {
 	private List<Profile> profileList = new ArrayList<Profile>();
-	private HashMap<String, Profile> profileHashMap = new HashMap<String, Profile>();
+	private Map<String, Profile> profileHashMap = new HashMap<String, Profile>();
 	DBConnection dbConnection = new DBConnection();
 	ReadFile readFile; 
 	ResultSet rs = null;
@@ -75,6 +76,8 @@ public class DBLoadData {
 				
 			}
 		}
+		loadData();
+		setRelations();
 	}
 	
 	public void loadData() {
@@ -105,7 +108,13 @@ public class DBLoadData {
 //					profileList.add(new YoungChild(strName, strImage, strStatus, strGender, strPostcode, age));
 					profileHashMap.put(strName, new YoungChild(strName, strImage, strStatus, strGender, strPostcode, age));
 				}
+//				System.out.println("Name: " + profileHashMap.get(strName).getName() + "\t");
+//				System.out.println("Image: " + profileHashMap.get(strName).getImage() + "\t");
+//				System.out.println("Status: " + profileHashMap.get(strName).getStatus() + "\t");
+//				System.out.println("Gender: " + profileHashMap.get(strName).getGender() + "\t");
+//				System.out.println("Postcode: " + profileHashMap.get(strName).getPostcode() + "\t");
 			}
+			
 			dbConnection.connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -113,7 +122,7 @@ public class DBLoadData {
 	}
 	public static void main(String args[]) {
 		DBLoadData dbload = new DBLoadData();
-		dbload.loadData();
+//		dbload.loadData();
 		for(String name: dbload.profileHashMap.keySet()) {
 			System.out.println("Name: " + dbload.profileHashMap.get(name).getName() + "\t");
 			System.out.println("Image: " + dbload.profileHashMap.get(name).getImage() + "\t");
@@ -132,6 +141,7 @@ public class DBLoadData {
 				System.out.println("Age: " + ((YoungChild)dbload.profileHashMap.get(name)).getAge());
 				System.out.println("---------THis is an YoungChild!-------");
 			}
+			System.out.println(dbload.profileHashMap.size());
 		}
 	}
 	public void setRelations() {
@@ -152,22 +162,22 @@ public class DBLoadData {
 				}
 				if(str[2].equals("parent")) {
 					if(profileHashMap.get(str[0]) instanceof Adult) {
-						((Adult)profileHashMap.get(str[0])).getChildrenList().add(profileHashMap.get(str[1]));
-						if(((Children)profileHashMap.get(str[1])).getParent1() == null) {
-							((Children)profileHashMap.get(str[1])).setParent1(((Adult)profileHashMap.get(str[0])));
-						}
-						else {
-							((Children)profileHashMap.get(str[1])).setParent2(((Adult)profileHashMap.get(str[0])));
-						}
+//						((Adult)profileHashMap.get(str[0])).getChildrenList().add(profileHashMap.get(str[1]));
+//						if(((Children)profileHashMap.get(str[1])).getParent1() == null) {
+//							((Children)profileHashMap.get(str[1])).setParent1(((Adult)profileHashMap.get(str[0])));
+//						}
+//						else {
+//							((Children)profileHashMap.get(str[1])).setParent2(((Adult)profileHashMap.get(str[0])));
+//						}
 					}
 					if(profileHashMap.get(str[1]) instanceof Adult) {
-						((Adult)profileHashMap.get(str[1])).getChildrenList().add(profileHashMap.get(str[0]));
-						if(((Children)profileHashMap.get(str[0])).getParent1() == null) {
-							((Children)profileHashMap.get(str[0])).setParent1(((Adult)profileHashMap.get(str[1])));
-						}
-						else {
-							((Children)profileHashMap.get(str[0])).setParent2(((Adult)profileHashMap.get(str[1])));
-						}
+//						((Adult)profileHashMap.get(str[1])).getChildrenList().add(profileHashMap.get(str[0]));
+//						if(((Children)profileHashMap.get(str[0])).getParent1() == null) {
+//							((Children)profileHashMap.get(str[0])).setParent1(((Adult)profileHashMap.get(str[1])));
+//						}
+//						else {
+//							((Children)profileHashMap.get(str[0])).setParent2(((Adult)profileHashMap.get(str[1])));
+//						}
 					}
 				}
 				if(str[2].equals("colleagues")) {
@@ -193,6 +203,13 @@ public class DBLoadData {
 
 	public void setProfileList(List<Profile> profileList) {
 		this.profileList = profileList;
+	}
+	public Map<String, Profile> getProfilHashMap() {
+		return profileHashMap;
+	}
+
+	public void setProfileHashMap(Map<String, Profile> profileHashMap) {
+		this.profileHashMap = profileHashMap;
 	}
 }
 
