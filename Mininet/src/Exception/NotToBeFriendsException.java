@@ -2,8 +2,8 @@ package Exception;
 
 public class NotToBeFriendsException extends Exception
 {
-  public NotToBeFriendsException(String errMsg)
+  public NotToBeFriendsException()
   {
-    super(errMsg);
+    System.out.println("These two profiles cannot connect due to age gap");
   }
 }

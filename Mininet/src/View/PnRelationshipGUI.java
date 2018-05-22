@@ -61,13 +61,49 @@ public class PnRelationshipGUI extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		
 		if(e.getSource() == btCheckRelation) {
+			String strMessage = "";
 			Profile pro1 = mainMenu.menu.objProReturn(tfPerson1.getText());
 			Profile pro2 = mainMenu.menu.objProReturn(tfPerson2.getText());
-			String strMessage = mainMenu.menu.checkRelationshipT(pro1, pro2);
-			JOptionPane.showMessageDialog(null, "Relation: " + strMessage);
+			if(pro1 == null || pro2 == null) {
+				JOptionPane.showMessageDialog(null, "Profile name does not exist!! please typing again!! ");
+			}
+			else {
+				strMessage = mainMenu.menu.checkRelationshipT(pro1, pro2);
+				JOptionPane.showMessageDialog(null, "Relation: " + strMessage);
+			}
+			tfPerson1.setText("");
+			tfPerson2.setText("");
 		}
 		if(e.getSource() == btDefineRelation) {
-			
+			String[] options = {"Friend", "Colleaguel", "Classmate"};
+		     int x = JOptionPane.showOptionDialog(null, "What relation do you want to define??? ",
+		                "Click a button",
+		                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		     if(x == 0) {
+		    	 	System.out.println(x);
+		    	 	if(mainMenu.menu.defineFriendRelations(mainMenu.menu.objProReturn(tfPerson1.getText()), mainMenu.menu.objProReturn(tfPerson2.getText())) == true) {
+		    	 		JOptionPane.showMessageDialog(null, "Success to make friend!!!");
+		    	 	}
+		    	 	else {
+		    	 		JOptionPane.showMessageDialog(null, "Failse to make friend!!!");
+		    	 	}
+		     }
+		     if(x == 1) {
+		    	 if(mainMenu.menu.defineColleaguelRelations(mainMenu.menu.objProReturn(tfPerson1.getText()), mainMenu.menu.objProReturn(tfPerson2.getText())) == true) {
+		    	 		JOptionPane.showMessageDialog(null, "Success to make Colleaguel!!!");
+		    	 	}
+		    	 	else {
+		    	 		JOptionPane.showMessageDialog(null, "Failse to make Colleaguel!!!");
+		    	 	}
+		     }
+		     if(x == 2) {
+		    	 if(mainMenu.menu.defineClassmateRelations(mainMenu.menu.objProReturn(tfPerson1.getText()), mainMenu.menu.objProReturn(tfPerson2.getText())) == true) {
+		    	 		JOptionPane.showMessageDialog(null, "Success to make Classmate!!!");
+		    	 	}
+		    	 	else {
+		    	 		JOptionPane.showMessageDialog(null, "Failse to make Classmate!!!");
+		    	 	}
+		     }
 		}
 	}
 }

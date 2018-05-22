@@ -2,5 +2,21 @@ Alex Smith,Ben Turner,friends
 Ben Turner,Zoe Foster,couple
 Ben Turner,Mark Turner,parent
 Mark Turner,Zoe Foster,parent
-Khanh Nguyen,Thuy Pham,parent
+Khanh Nguyen, Thuy Pham, parent
 Thuy Pham,Trung Pham,parent
+Anna Watson, Sulien Rigby, friends
+Anh Tu, Owen Rigby, parent
+Anh Thu, Owen Rigby, parent
+Owen Rigby, Thuy Pham, friends
+Andy Song, Falk Scholer, couple
+Visek, Falk Scholer, parent
+Visek, Andy Song, parent
+Minh Minh, Falk Scholer, parent
+Andy Song, Minh Minh, parent
+Visek, Thuy Pham, classmates
+Alex Smith, Anna Watson, colleagues
+Alex Smith, Anna Watson, classmates
+Ben Turner, Thuy Pham, friends
+Thuy Pham, Sulien Rigby, colleagues
+Visek, Andy Song, friends
+Minh Minh, Anna Watson, friends

@@ -1,18 +1,16 @@
 package Model;
-
 import java.io.*;
 import java.util.*;
 
-import javafx.scene.control.Alert;
+
 
 public class ReadFile
 {
   private ArrayList<Profile> listofPros;
   private ArrayList<Profile> listofRelations;
-  public ReadFile() throws IOException
+  public ReadFile() throws IOException, CustomFileNotFoundException
   {
     listofPros = new ArrayList<Profile>();
-    
     String filePeople = "document/people.txt";
     String fileRelation = "document/relations.txt";
 	 Hashtable<String, ArrayList<String>> adults = new Hashtable<>();
@@ -80,9 +78,12 @@ public class ReadFile
       {
         System.out.println(e); //need to modify when have GUI
       }
-      fr.close();
-    }catch(FileNotFoundException fnfe){
-      System.out.println(fnfe.getMessage());// need to modify when have GUI
+
+    }
+
+    catch(FileNotFoundException fnfe){
+
+      throw new CustomFileNotFoundException ();
     }
 
     try
@@ -111,12 +112,11 @@ public class ReadFile
       {
         System.out.println(e);
       }
-      f_read.close();
     }
 
     catch(FileNotFoundException fnfe)
     {
-      System.out.println(fnfe.getMessage());// need to modify when have GUI
+      throw new CustomFileNotFoundException();
     }
 
     /*Creating adult profiles*/
@@ -224,6 +224,7 @@ public class ReadFile
         ((Adult)adult1).addYoungChild(pro_youngchild);
         ((Adult)adult2).addYoungChild(pro_youngchild);
         hash_Pro.put(name, pro_youngchild);
+
       }
     }
 
@@ -253,6 +254,15 @@ public class ReadFile
             {
               notvalidFriendship =true;
             }
+
+            if ((eachpro instanceof Children) && (pro_newfriend instanceof Children))
+            {
+              int age_gap = Math.abs(((Children)eachpro).getAge() - ((Children)pro_newfriend).getAge());
+              if (age_gap > 3)
+              {
+                notvalidFriendship = true;
+              }
+            }
             if ((!alreadyFriend) && (!notvalidFriendship))
             {
               eachpro.addFriend(pro_newfriend);
@@ -278,17 +288,22 @@ public class ReadFile
             Profile pro_newColleague = hash_Pro.get(relationInfor.get(1));
             boolean alreadyColleague = false;
             boolean isAdult = false;
-            for (Profile pro_colleague : ((Adult)eachpro).getColleaguelist())
-            {
-              if ((pro_colleague.getName()).equals(relationInfor.get(1)))
-              {
-                alreadyColleague = true;
-              }
-            }
             if ((pro_newColleague instanceof Adult) && (eachpro instanceof Adult))
             {
               isAdult = true;
             }
+
+            if (isAdult)
+            {
+              for (Profile pro_colleague : ((Adult)eachpro).getColleaguelist())
+              {
+                if ((pro_colleague.getName()).equals(relationInfor.get(1)))
+                {
+                  alreadyColleague = true;
+                }
+              }
+            }
+
             if ((!alreadyColleague) && (isAdult))
             {
               ((Adult)eachpro).addColleague(pro_newColleague);
@@ -300,13 +315,27 @@ public class ReadFile
             Profile pro_newClassmate = hash_Pro.get(relationInfor.get(1));
             boolean alreadyClassmate = false;
             boolean belowTwoYearsOld = false;
-            for (Profile pro_classmate : ((Adult)eachpro).getClassmatesList())
+            if (eachpro instanceof Adult)
             {
-              if ((pro_classmate.getName()).equals(relationInfor.get(1)))
+              for (Profile pro_classmate : ((Adult)eachpro).getClassmatesList())
               {
-                alreadyClassmate = true;
+                if ((pro_classmate.getName()).equals(relationInfor.get(1)))
+                {
+                  alreadyClassmate = true;
+                }
               }
             }
+            if (eachpro instanceof Children)
+            {
+              for (Profile pro_classmate : ((Children)eachpro).getClassmatesList())
+              {
+                if ((pro_classmate.getName()).equals(relationInfor.get(1)))
+                {
+                  alreadyClassmate = true;
+                }
+              }
+            }
+
             if ((eachpro instanceof YoungChild) || (pro_newClassmate instanceof YoungChild))
             {
               belowTwoYearsOld = true;
@@ -374,7 +403,7 @@ public class ReadFile
   {
     return this.listofPros;
   }
-  public static void main(String args[]) throws IOException {
+  public static void main(String args[]) throws IOException, CustomFileNotFoundException {
 	  ReadFile reader = new ReadFile();
 	  for(Profile pro: reader.getListofPros()) {
 		  if(pro instanceof Adult) {
@@ -384,11 +413,11 @@ public class ReadFile
 			  System.out.println("Gender: " + ((Adult)pro).getStatus());
 			  System.out.println("Postcode: " + ((Adult)pro).getGender());
 		  }
-		  
+
 		  if(pro instanceof Children) {
 			  System.out.println("THis is a children");
 		  }
-		  
+
 		  if(pro instanceof YoungChild) {
 			  System.out.println("this is a young child");
 		  }
@@ -401,15 +430,7 @@ public ArrayList<Profile> getListofRelations() {
 public void setListofRelations(ArrayList<Profile> listofRelations) {
 	this.listofRelations = listofRelations;
 }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
 
 }

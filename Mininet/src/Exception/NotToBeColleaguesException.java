@@ -2,8 +2,8 @@ package Exception;
 
 public class NotToBeColleaguesException extends Exception
 {
-  public NotToBeColleaguesException(String errMsg)
+  public NotToBeColleaguesException()
   {
-    super(errMsg);
+    System.out.println("A children and a adult cannot be colleagues!!");
   }
 }

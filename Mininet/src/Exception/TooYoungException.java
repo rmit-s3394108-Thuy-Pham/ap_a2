@@ -2,8 +2,8 @@ package Exception;
 
 public class TooYoungException extends Exception
 {
-  public TooYoungException(String errMesg)
+  public TooYoungException()
   {
-//    super(errMsg);
+    System.out.println("Young child can not have friends in this network!");
   }
 }

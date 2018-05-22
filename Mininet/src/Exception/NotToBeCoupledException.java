@@ -2,8 +2,8 @@ package Exception;
 
 public class NotToBeCoupledException
 {
-  public NotToBeCoupledException(String errMsg)
+  public NotToBeCoupledException()
   {
-//    super(errMsg);
+    System.out.println("Couple relationship is only for Adult!!");
   }
 }

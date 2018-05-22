@@ -2,8 +2,8 @@ package Exception;
 
 public class NotToBeClassmatesException extends Exception
 {
-  public NotToBeClassmatesException(String errMsg)
+  public NotToBeClassmatesException()
   {
-    super(errMsg);
+    System.out.println("Young Child cannot have a classmates!!");
   }
 }

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import DBConnection.DBLoadData;
+import Model.CustomFileNotFoundException;
 import Model.Menu;
 import imageProcess.ImagePro;
 
@@ -37,9 +38,10 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 	int _frameY = 150;
 	int _pnMenuWidth = 150;
 	int _pnChangingWidth = 550;
-	DBLoadData dbLoadConnection = new DBLoadData();
-	Menu menu = new Menu();
-	public MainMenuGUI() {
+	
+	Menu menu; ;
+	public MainMenuGUI() throws CustomFileNotFoundException {
+		menu = new Menu();
 		setFrame();
 	}
 	public void setFrame() {
@@ -75,11 +77,11 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new MainMenuGUI();
-		
-	}
+//	public static void main(String[] args) throws CustomFileNotFoundException {
+//		// TODO Auto-generated method stub
+//		new MainMenuGUI();
+//		
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -123,7 +125,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		}
 		if(e.getSource() == btFindoutRelations) {
 			pnChanging.removeAll();
-			pnChanging.add(new PnFindoutRelations());
+			pnChanging.add(new PnFindoutRelations(this));
 			pnChanging.repaint();
 			pnChanging.revalidate();
 			

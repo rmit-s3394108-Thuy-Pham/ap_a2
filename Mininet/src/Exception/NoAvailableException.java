@@ -2,8 +2,8 @@ package Exception;
 
 public class NoAvailableException extends Exception
 {
-  public NoAvailableException(String errMsg)
+  public NoAvailableException()
   {
-    super(errMsg);
+    System.out.println("This is not available to be coupled!");
   }
 }

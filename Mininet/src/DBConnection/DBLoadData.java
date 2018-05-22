@@ -13,6 +13,7 @@ import java.util.Map;
 
 import Model.Adult;
 import Model.Children;
+import Model.CustomFileNotFoundException;
 import Model.Profile;
 import Model.ReadFile;
 import Model.YoungChild;
@@ -24,7 +25,7 @@ public class DBLoadData {
 	ReadFile readFile; 
 	ResultSet rs = null;
 	BufferedReader input = null;
-	public DBLoadData() {
+	public DBLoadData() throws CustomFileNotFoundException {
 		String strData;
 		String strName;
 		String strImage;
@@ -120,7 +121,7 @@ public class DBLoadData {
 			e.printStackTrace();
 		}
 	}
-	public static void main(String args[]) {
+	public static void main(String args[]) throws CustomFileNotFoundException {
 		DBLoadData dbload = new DBLoadData();
 //		dbload.loadData();
 		for(String name: dbload.profileHashMap.keySet()) {

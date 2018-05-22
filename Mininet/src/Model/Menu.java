@@ -14,7 +14,7 @@ public class Menu {
 	private ArrayList<Profile> profileList = new ArrayList<>();
 	ReadFile readFile; 
 	
-	public Menu() {
+	public Menu() throws CustomFileNotFoundException {
 //		dataProvide();
 		try {
 			readFile = new ReadFile();
@@ -151,15 +151,25 @@ public class Menu {
 					((Children)classmate).getClassmatesList().remove(pro);
 				}
 			}
-			((Children)pro).getParent1().getChildrenList().remove(pro);
-			((Children)pro).getParent2().getChildrenList().remove(pro);
+			if(((Children)pro).getParent1() != null) {
+				((Children)pro).getParent1().getChildrenList().remove(pro);
+			}
+			if(((Children)pro).getParent2() != null) {
+				((Children)pro).getParent2().getChildrenList().remove(pro);
+			}
 		}
 		if(pro instanceof YoungChild) {
-			((YoungChild)pro).getParent1().getChildrenList().remove(pro);
-			((YoungChild)pro).getParent2().getChildrenList().remove(pro);
+			if(((YoungChild)pro).getParent1() != null){
+				((YoungChild)pro).getParent1().getChildrenList().remove(pro);
+			}
+			if(((YoungChild)pro).getParent2() != null) {
+				((YoungChild)pro).getParent2().getChildrenList().remove(pro);
+			}
 		}
 		profileList.remove(pro);
 	}
+	
+	//--------------------------------------------------------
 	
 	public void connectFriend(Profile pro) {
 		String name;
@@ -217,6 +227,10 @@ public class Menu {
 		}
 		
 	}
+	//--------------------------------------------------------
+	
+	
+	
 	//--------------------------------------------------------
 	public void addNewProfile() {
 		String name;
@@ -371,22 +385,7 @@ public class Menu {
 //		System.out.println("AHIHIHIHIH");
 		return null;
 	}
-	public static void main(String args[]) {
-		Menu mn = new Menu();
-		Scanner s = new Scanner(System.in);
-		System.out.println("name 1:");
-		String str = s.nextLine();
-//		System.out.println("name 2:");
-//		String str2 = s.nextLine();
-		Profile pro = mn.objProReturn(str);
-		if(pro == null) {
-			System.out.println("name not correct!");
-		}
-		else {
-			System.out.println(pro.getName());
-			System.out.println(pro.getImage());
-		}
-	}
+	
 	
 	public boolean checkPaternity(Adult adult, Children child) {
 		if(adult.equals(child.getParent1()) || adult.equals(child.getParent2())) {
@@ -398,10 +397,150 @@ public class Menu {
 	public List<Profile> getProfileList(){
 		return this.profileList;
 	}
+	//--------------------------------------------
 	
+	public boolean defineFriendRelations(Profile pro1, Profile pro2) {
+		if(pro1 == pro2) {
+			return false;
+		}
+		else {
+			if(pro1 instanceof Adult && pro2 instanceof Adult) {
+//				int i = 0;
+				boolean check = true;
+				for(Profile pro: pro1.getFriendList()) {
+					if(pro.getName().equals(pro2.getName())) {
+						check = false;
+						break;
+					}
+				}
+				for(Profile pro: pro2.getFriendList()) {
+					if(pro.getName().equals(pro1.getName())) {
+						check = false;
+						break;
+					}
+				}
+				if(check == true) {
+					pro1.getFriendList().add(pro2);
+					pro2.getFriendList().add(pro1);
+					return true;
+				}
+			}
+			if(pro1 instanceof Children && pro2 instanceof Children) {
+//				int i = 0;
+				boolean check = true;
+				if(Math.abs(((Children)pro1).getAge() - ((Children)pro2).getAge()) >= 3) {
+					check = false;
+				}
+				else {
+					for(Profile pro: pro1.getFriendList()) {
+						if(pro.getName().equals(pro2.getName())) {
+							check = false;
+							break;
+						}
+					}
+					for(Profile pro: pro2.getFriendList()) {
+						if(pro.getName().equals(pro1.getName())) {
+							check = false;
+							break;
+						}
+					}
+				}
+				if(check == true) {
+					pro1.getFriendList().add(pro2);
+					pro2.getFriendList().add(pro1);
+					return true;
+				}
+				
+			}
+			return false;
+		}
+		
+	}
+	
+	//--------------------------------------------
+	public boolean defineColleaguelRelations(Profile pro1, Profile pro2) {
+		if(pro1 == pro2) {
+			return false;
+		}
+		else {
+			if(pro1 instanceof Adult && pro2 instanceof Adult) {
+				boolean check = true;
+				for(Profile pro: ((Adult)pro1).getColleaguelist()) {
+					if(pro.getName().equals(pro2.getName())) {
+						check = false;
+						break;
+					}
+				}
+				for(Profile pro: ((Adult)pro2).getColleaguelist()) {
+					if(pro.getName().equals(pro1.getName())) {
+						check = false;
+						break;
+					}
+				}
+				if(check == true) {
+					((Adult)pro1).getColleaguelist().add(pro2);
+					((Adult)pro2).getColleaguelist().add(pro1);
+					return true;
+				}
+			}
+			return false;
+		}
+		
+	}
+	
+	//--------------------------------------------
+	public boolean defineClassmateRelations(Profile pro1, Profile pro2) {
+		if(pro1 == pro2) {
+			return false;
+		}
+		if(pro1 instanceof Adult && pro2 instanceof Adult) {
+			boolean check = true;
+			for(Profile pro: ((Adult)pro1).getClassmatesList()) {
+				if(pro.getName().equals(pro2.getName())) {
+					check = false;
+					break;
+				}
+			}
+			for(Profile pro: ((Adult)pro2).getClassmatesList()) {
+				if(pro.getName().equals(pro1.getName())) {
+					check = false;
+					break;
+				}
+			}
+			if(check == true) {
+				((Adult)pro1).getClassmatesList().add(pro2);
+				((Adult)pro2).getClassmatesList().add(pro1);
+				return true;
+			}
+		}
+		
+		if(pro1 instanceof Children && pro2 instanceof Children) {
+			boolean check = true;
+			for(Profile pro: ((Children)pro1).getClassmatesList()) {
+				if(pro.getName().equals(pro2.getName())) {
+					check = false;
+					break;
+				}
+			}
+			for(Profile pro: ((Children)pro2).getClassmatesList()) {
+				if(pro.getName().equals(pro1.getName())) {
+					check = false;
+					break;
+				}
+			}
+			if(check == true) {
+				((Children)pro1).getClassmatesList().add(pro2);
+				((Children)pro2).getClassmatesList().add(pro1);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//--------------------------------------------
 	
 	public String checkRelationshipT(Profile pro1, Profile pro2)
-  {
+	{
     String relationships = new String();
     ArrayList<Profile> friendlist;
     ArrayList<Profile> childrenlist;

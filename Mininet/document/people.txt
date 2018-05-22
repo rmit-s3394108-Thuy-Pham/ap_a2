@@ -4,5 +4,14 @@ Hannah White,Hannah.png,student at PLC,F,14,VIC
 Zoe Foster,"",Founder of ZFX,F,28,VIC
 Mark Turner,Mark.jpeg,this is a young child,M,2,VIC
 Trung Pham,trung.img,this is a adult,M,30,VIC
-Khanh Nguyen,khanh.img,this is a adult,F,32,VIC
-Thuy Pham,thuy.img,this is a children,F,14,VIC 
+Thuy Pham,thuy.img,this is a children,F,14,VIC
+Khanh Nguyen, khanh.img, this is an adult, M, 25, VIC
+Sulien Rigby, sulien.img, this is an adult, M, 24, VIC
+Anna Watson, anna.img, this is an adult, F, 40, VIC
+Owen Rigby, owen.img, this is a children, M, 9, VIC
+Anh Tu, tu.img, this is an andult, M, 30, VIC
+Anh Thu, thu.img, this is an adult, F, 31, VIC
+Minh Minh, minh.img, this is a young child, F, 1, VIC
+Falk Scholer, F.img, this is a adult, M, 40, VIC
+Andy Song, A.img, this is a adult, F, 40, VIC
+Visek, V.img, this is a children, M, 12, VIC

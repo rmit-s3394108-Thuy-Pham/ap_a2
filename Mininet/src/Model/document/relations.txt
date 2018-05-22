@@ -1,6 +1,0 @@
-Alex Smith,Ben Turner,friends
-Ben Turner,Zoe Foster,couple
-Ben Turner,Mark Turner,parent
-Mark Turner,Zoe Foster,parent
-Khanh Nguyen,Thuy Pham,parent
-Thuy Pham,Trung Pham,parent
