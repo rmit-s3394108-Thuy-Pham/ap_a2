@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Model.Profile;
 import imageProcess.ImagePro;
 
 public class PnDisplayPersonInfoGUI extends JPanel implements ActionListener{
@@ -23,6 +24,10 @@ public class PnDisplayPersonInfoGUI extends JPanel implements ActionListener{
 	JLabel lbStatuslb = new JLabel("Status:");
 	JLabel lbStatus = new JLabel("I am a RMIT student");
 	JLabel lbImage = new JLabel("non image");
+	JLabel lbGenderlb = new JLabel("Gender: ");
+	JLabel lbGender = new JLabel("M");
+	JLabel lbPostcodelb = new JLabel("Postcode");
+	JLabel lbPostcode = new JLabel("VIC");
 	int _btWidth = 100;
 	int _btHeight = 40;
 	int _btDeleteX = 200;
@@ -36,7 +41,7 @@ public class PnDisplayPersonInfoGUI extends JPanel implements ActionListener{
 	int _lblbX = 200;
 	int _lbvlX = 300;
 	int _gapX = 10;
-	int _gapY = 30;
+	int _gapY = 10;
 	int _lbNamelbY = 50;
 	MainMenuGUI mainMenu;
 	PnSelectPersonGUI pnSelect;
@@ -48,6 +53,7 @@ public class PnDisplayPersonInfoGUI extends JPanel implements ActionListener{
 		this.setLayout(null);
 		setPanel();
 		this.btCancel.addActionListener(this);
+		this.btDelete.addActionListener(this);
 		this.add(lbNamelb);
 		this.add(lbName);
 		this.add(lbAgelb);
@@ -55,8 +61,13 @@ public class PnDisplayPersonInfoGUI extends JPanel implements ActionListener{
 		this.add(lbStatuslb);
 		this.add(lbStatus);
 		this.add(lbImage);
+		this.add(lbGenderlb);
+		this.add(lbGender);
+		this.add(lbPostcodelb);
+		this.add(lbPostcode);
 		this.add(btDelete);
 		this.add(btCancel);
+		
 	}
 	public void setPanel() {
 		btDelete.setBounds(_btDeleteX, _btDeleteY, _btWidth, _btHeight);
@@ -68,6 +79,10 @@ public class PnDisplayPersonInfoGUI extends JPanel implements ActionListener{
 		lbAge.setBounds(_lbvlX, lbAgelb.getY(), _lbvlWidth, _lbvlHeight);
 		lbStatuslb.setBounds(_lblbX, lbAgelb.getY() + _lblbHeight + _gapY, _lblbWidth, _lblbHeight);
 		lbStatus.setBounds(_lbvlX, lbStatuslb.getY(), _lbvlWidth, _lbvlHeight);
+		lbGenderlb.setBounds(_lblbX, lbStatuslb.getY() + _lblbHeight + _gapY, _lblbWidth, _lblbHeight);
+		lbGender.setBounds(_lbvlX, lbStatuslb.getY() + _lblbHeight + _gapY, _lbvlWidth, _lbvlHeight);
+		lbPostcodelb.setBounds(_lblbX, lbGenderlb.getY() + _lblbHeight + _gapY, _lblbWidth, _lblbHeight);
+		lbPostcode.setBounds(_lbvlX, lbGenderlb.getY() + _lblbHeight + _gapY, _lblbWidth, _lblbHeight);
 		lbImage.setIcon(new ImagePro().iUsername);
 	}
 	@Override
@@ -79,6 +94,30 @@ public class PnDisplayPersonInfoGUI extends JPanel implements ActionListener{
 			this.mainMenu.repaint();
 			this.mainMenu.revalidate();
 		}
+		if(e.getSource() == btDelete) {
+			int i = 0;
+			for(Profile pro: mainMenu.menu.getProfileList()) {
+				if(pro.getName().equals(lbName.getText())) {
+					mainMenu.menu.deleteProfileInfo(pro);
+					break;
+				}
+			}
+			this.mainMenu.pnChanging.removeAll();
+			this.mainMenu.pnChanging.add(pnSelect);
+			this.mainMenu.repaint();
+			this.mainMenu.revalidate();
+//			this.mainMenu.pnChanging.removeAll();
+//			this.mainMenu.pnChanging.add(pnSelect);
+//			this.mainMenu.repaint();
+//			this.mainMenu.revalidate();
+//			mainMenu.menu.deleteProfileInfo(pro);
+		}
 	}
 
 }
+
+
+
+
+
+

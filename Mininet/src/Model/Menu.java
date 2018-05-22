@@ -1,6 +1,8 @@
 package Model;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -9,49 +11,18 @@ public class Menu {
 	private Scanner sAdd;
 	private Scanner sCheck;
 	private Scanner sSearch;
-	ArrayList<Profile> profileList = new ArrayList<>();
+	private ArrayList<Profile> profileList = new ArrayList<>();
+	ReadFile readFile; 
 	
 	public Menu() {
 //		dataProvide();
-		int i = 0;
-		do {
-			s = new Scanner(System.in);
-			System.out.println("1. list everyone.");
-			System.out.println("2. select a person.");
-			System.out.println("3. add a person");
-			System.out.println("4. are these two direct friend?");
-			System.out.println("5. find out relationship");
-			System.out.println("6. exit");
-			try {
-				i = s.nextInt();
-			}catch(InputMismatchException nm) {
-				i = 0;
-				System.out.println("wrong format!! please input a number!");
-			}
-			switch(i) {
-			case 1:
-				listOfProfile();
-				break;
-			case 2:
-				selectProfile();
-				break;
-			case 3:
-				addNewProfile();
-				break;
-			case 4:
-				checkFriendRelation();
-				break;
-			case 5:
-				findOutRelation();
-				break;
-				
-			case 6:
-				System.out.println("the program stopped!!");
-				break;
-			default:
-				break;
-			}
-		}while(i != 6);
+		try {
+			readFile = new ReadFile();
+			profileList = readFile.getListofPros();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void listOfProfile() {
 		for(Profile pro: profileList) {
@@ -149,6 +120,44 @@ public class Menu {
 		}
 	
 	public void deleteProfileInfo(Profile pro) {
+//		profileList.remove(pro);
+		for(Profile friend: (pro).getFriendList()) {
+			friend.getFriendList().remove(pro);
+		}
+		if(pro instanceof Adult) {
+			
+			for(Profile child: ((Adult)pro).getChildrenList()) {
+				if(((Children)child).getParent1().equals((Adult)pro)) {
+					((Children)child).setParent1(null);
+				}	
+				if(((Children)child).getParent2().equals((Adult)pro)) {
+					((Children)child).setParent2(null);
+				}
+			}
+			
+			for(Profile colleague: ((Adult)pro).getColleaguelist()) {
+				((Adult)colleague).getColleaguelist().remove(pro);
+			}
+			for(Profile classmate: ((Adult)pro).getClassmatesList()) {
+				((Adult)classmate).getClassmatesList().remove(pro);
+			}
+		}
+		if(pro instanceof Children) {
+			for(Profile classmate: ((Children)pro).getClassmatesList()) {
+				if(classmate instanceof Adult) {
+					((Adult)classmate).getClassmatesList().remove(pro);
+				}
+				if(classmate instanceof Children) {
+					((Children)classmate).getClassmatesList().remove(pro);
+				}
+			}
+			((Children)pro).getParent1().getChildrenList().remove(pro);
+			((Children)pro).getParent2().getChildrenList().remove(pro);
+		}
+		if(pro instanceof YoungChild) {
+			((YoungChild)pro).getParent1().getChildrenList().remove(pro);
+			((YoungChild)pro).getParent2().getChildrenList().remove(pro);
+		}
 		profileList.remove(pro);
 	}
 	
@@ -265,6 +274,10 @@ public class Menu {
 			}
 		}
 	}
+	//---------------------------------------------------------
+	public void addNewAdul(String name, String image, String status, String gender, int age, String postcode) {
+		
+	}
 	
 	//---------------------------------------------------------
 	public void checkFriendRelation() {
@@ -350,10 +363,29 @@ public class Menu {
 	public Profile objProReturn(String name) {
 		for(Profile pro: profileList) {
 			if(name.equals(pro.getName())) {
+//				System.out.println("name correct!");
 				return pro;
 			}
 		}
+		
+//		System.out.println("AHIHIHIHIH");
 		return null;
+	}
+	public static void main(String args[]) {
+		Menu mn = new Menu();
+		Scanner s = new Scanner(System.in);
+		System.out.println("name 1:");
+		String str = s.nextLine();
+//		System.out.println("name 2:");
+//		String str2 = s.nextLine();
+		Profile pro = mn.objProReturn(str);
+		if(pro == null) {
+			System.out.println("name not correct!");
+		}
+		else {
+			System.out.println(pro.getName());
+			System.out.println(pro.getImage());
+		}
 	}
 	
 	public boolean checkPaternity(Adult adult, Children child) {
@@ -363,7 +395,213 @@ public class Menu {
 		else 
 			return false;
 	}
+	public List<Profile> getProfileList(){
+		return this.profileList;
+	}
 	
+	
+	public String checkRelationshipT(Profile pro1, Profile pro2)
+  {
+    String relationships = new String();
+    ArrayList<Profile> friendlist;
+    ArrayList<Profile> childrenlist;
+    ArrayList<Profile> youngchildlist;
+    ArrayList<Profile>  colleaguelist;
+    ArrayList<Profile> classmateslist;
+    Profile couple;
+    String result;
+    if (pro1 instanceof Adult)
+    {
+      friendlist = pro1.getFriendList();
+      childrenlist = ((Adult)pro1).getChildrenList();
+      youngchildlist = ((Adult)pro1).getYoungChildList();
+      colleaguelist = ((Adult)pro1).getColleaguelist();
+      classmateslist = ((Adult)pro1).getClassmatesList();
+      couple = ((Adult)pro1).getCouple();
+      if (couple != null)
+      {
+        if ((couple.getName()).equals(pro2.getName()))
+        {
+          relationships = relationships.concat(" in a couple relationship with");
+        }
+      }
+      if (friendlist.size() > 0)
+      {
+        for (Profile eachpro: friendlist)
+        {
+          if ((eachpro.getName()).equals(pro2.getName()))
+          {
+            relationships = relationships.concat(" a friend");
+          }
+        }
+      }
+      if (childrenlist.size() > 0)
+      {
+        for(Profile eachpro : childrenlist)
+        {
+          if ((eachpro.getName()).equals(pro2.getName()))
+          {
+            relationships = relationships.concat(" a parent");
+          }
+        }
+      }
+      if (youngchildlist.size() > 0)
+      {
+        for(Profile eachpro : youngchildlist)
+        {
+          if ((eachpro.getName()).equals(pro2.getName()))
+          {
+            relationships = relationships.concat(" a parent");
+          }
+        }
+      }
+      if (colleaguelist.size() > 0)
+      {
+        for(Profile eachpro: colleaguelist)
+        {
+          if ((eachpro.getName()).equals(pro2.getName()))
+          {
+            relationships = relationships.concat(" a colleague");
+          }
+        }
+      }
+      if (classmateslist.size() > 0)
+      {
+        for(Profile eachpro: classmateslist)
+        {
+          if ((eachpro.getName()).equals(pro2.getName()))
+          {
+            relationships = relationships.concat(" a classmates");
+          }
+        }
+      }
+    }
+    if (pro1 instanceof Children)
+    {
+      friendlist = pro1.getFriendList();
+      classmateslist = ((Children)pro1).getClassmatesList();
+      Adult parent1 = (((Children)pro1).getParent1());
+      Adult parent2 = (((Children)pro1).getParent2());
+      if (friendlist.size() > 0)
+      {
+        for (Profile eachpro: friendlist)
+        {
+          if ((eachpro.getName()).equals(pro2.getName()))
+          {
+            relationships = relationships.concat(" a friend");
+          }
+        }
+      }
+      if (classmateslist.size() > 0)
+      {
+        for(Profile eachpro: classmateslist)
+        {
+          if ((eachpro.getName()).equals(pro2.getName()))
+          {
+            relationships = relationships.concat(" a classmate");
+          }
+
+        }
+      }
+      if (((parent1.getName()).equals(pro2.getName())) || ((parent2.getName()).equals(pro2.getName())))
+      {
+        relationships = relationships.concat(" a children");
+      }
+      if (pro2 instanceof YoungChild)
+      {
+        Adult parentX = ((YoungChild)pro2).getParent1();
+        Adult parentY = ((YoungChild)pro2).getParent1();
+        if (((parentX.getName()).equals(parent1.getName())) || ((parentY.getName()).equals(parent1.getName())) || ((parentX.getName()).equals(parent2.getName())) || ((parentY.getName()).equals(parent2.getName())))
+        {
+          relationships = relationships.concat(" a sibling");
+        }
+      }
+      else if (pro2 instanceof Children)
+      {
+        Adult parentX = ((Children)pro2).getParent1();
+        Adult parentY = ((Children)pro2).getParent1();
+        if (((parentX.getName()).equals(parent1.getName())) || ((parentY.getName()).equals(parent1.getName())) || ((parentX.getName()).equals(parent2.getName())) || ((parentY.getName()).equals(parent2.getName())))
+        {
+          relationships = relationships.concat(" a sibling");
+        }
+      }
+    }
+    if (pro1 instanceof YoungChild)
+    {
+      Adult parent1 = (((YoungChild)pro1).getParent1());
+      Adult parent2 = (((YoungChild)pro1).getParent2());
+      if (((parent1.getName()).equals(pro2.getName())) || ((parent2.getName()).equals(pro2.getName())))
+      {
+        relationships = relationships.concat(" a young child");
+      }
+      if (pro2 instanceof YoungChild)
+      {
+        Adult parentX = ((YoungChild)pro2).getParent1();
+        Adult parentY = ((YoungChild)pro2).getParent1();
+        if (((parentX.getName()).equals(parent1.getName())) || ((parentY.getName()).equals(parent1.getName())) || ((parentX.getName()).equals(parent2.getName())) || ((parentY.getName()).equals(parent2.getName())))
+        {
+          relationships = relationships.concat(" a sibling");
+        }
+      }
+      else if (pro2 instanceof Children)
+      {
+        Adult parentX = ((Children)pro2).getParent1();
+        Adult parentY = ((Children)pro2).getParent1();
+        if (((parentX.getName()).equals(parent1.getName())) || ((parentY.getName()).equals(parent1.getName())) || ((parentX.getName()).equals(parent2.getName())) || ((parentY.getName()).equals(parent2.getName())))
+        {
+          relationships = relationships.concat(" a sibling");
+        }
+      }
+    }
+    if (!relationships.isEmpty())
+    {
+    result = pro1.getName() + " is " + relationships + " of " + pro2.getName();
+    }
+    else
+    {
+    result = "They do not have any relationships between them";
+    }
+    return result;
+  }
+
+	public ArrayList<Profile> findOutFamilyRelationT(Profile pro)
+	{// family here means only parent-chidren relationship
+		ArrayList<Profile> familylist = new ArrayList<Profile>();
+		if(pro instanceof Adult)
+		{
+			ArrayList<Profile> youngchildlist = ((Adult)pro).getYoungChildList();
+			ArrayList<Profile> childrenlist = ((Adult)pro).getChildrenList();
+			if (youngchildlist.size() > 0)
+			{
+				for (Profile eachpro : youngchildlist)
+				{
+					familylist.add(eachpro);
+				}
+			}
+			if (childrenlist.size() > 0)
+			{
+				for (Profile eachpro : childrenlist)
+				{
+					familylist.add(eachpro);
+				}
+			}
+		}
+		else if(pro instanceof Children)
+		{
+			Adult parent1 = ((Children)pro).getParent1();
+			Adult parent2 = ((Children)pro).getParent2();
+			familylist.add(parent1);
+			familylist.add(parent2);
+		}
+		else
+		{
+			Adult parent1 = ((YoungChild)pro).getParent1();
+			Adult parent2 = ((YoungChild)pro).getParent2();
+			familylist.add(parent1);
+			familylist.add(parent2);
+		}
+		return familylist;
+	}
 //	public void dataProvide() {
 //	
 //		Profile pro[] = new Profile[9];

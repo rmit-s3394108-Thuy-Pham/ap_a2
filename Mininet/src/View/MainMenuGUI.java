@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import DBConnection.DBLoadData;
+import Model.Menu;
 import imageProcess.ImagePro;
 
 public class MainMenuGUI extends JFrame implements ActionListener {
@@ -37,10 +38,12 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 	int _pnMenuWidth = 150;
 	int _pnChangingWidth = 550;
 	DBLoadData dbLoadConnection = new DBLoadData();
+	Menu menu = new Menu();
 	public MainMenuGUI() {
 		setFrame();
 	}
 	public void setFrame() {
+//		JOptionPane.dialog
 		this.setLayout(null);
 		pnMenu.setLayout(null);
 		pnChanging.setLayout(new CardLayout());
@@ -82,7 +85,29 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == btAddPerson) {
-			
+			 String[] options = {"Adult", "Children", "Youngchild"};
+		     int x = JOptionPane.showOptionDialog(null, "Choose one option do you want to create!",
+		                "Click a button",
+		                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		     
+		     if(x == 0) {
+		    	 	pnChanging.removeAll();
+				pnChanging.add(new PnAddAdultGUI(this));
+				pnChanging.repaint();
+				pnChanging.revalidate();
+		     }
+		     if(x == 1) {
+		    	 	pnChanging.removeAll();
+				pnChanging.add(new PnAddChildrenGUI(this));
+				pnChanging.repaint();
+				pnChanging.revalidate();
+		     }
+		     if(x == 2) {
+		    	 	pnChanging.removeAll();
+				pnChanging.add(new PnAddYoungChildGUI(this));
+				pnChanging.repaint();
+				pnChanging.revalidate();
+		     }
 		}
 		if(e.getSource() == btSelectPerson) {
 			pnChanging.removeAll();
@@ -92,7 +117,7 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 		}
 		if(e.getSource() == btRelationship) {
 			pnChanging.removeAll();
-			pnChanging.add(new PnRelationshipGUI());
+			pnChanging.add(new PnRelationshipGUI(this));
 			pnChanging.repaint();
 			pnChanging.revalidate();
 		}
@@ -107,7 +132,6 @@ public class MainMenuGUI extends JFrame implements ActionListener {
 			System.exit(0);
 		}
 	}
-
 }
 
 
