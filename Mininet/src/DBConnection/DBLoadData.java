@@ -76,8 +76,8 @@ public class DBLoadData {
 				
 			}
 		}
-		loadData();
-		setRelations();
+//		loadData();
+//		setRelations();
 	}
 	
 	public void loadData() {
